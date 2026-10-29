@@ -1,0 +1,27 @@
+
+# Stage 1: Build application
+FROM eclipse-temurin:21-jdk-jammy AS build
+
+WORKDIR /app
+
+COPY gradlew .
+COPY gradle ./gradle
+COPY settings.gradle .
+COPY build.gradle .
+
+RUN chmod +x gradlew
+
+COPY src ./src
+
+RUN ./gradlew clean bootJar --no-daemon
+
+# Stage 2: Run application
+FROM eclipse-temurin:21-jre-jammy
+
+WORKDIR /app
+
+COPY --from=build /app/build/libs/*.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

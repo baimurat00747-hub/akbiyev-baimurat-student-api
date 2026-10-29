@@ -1,0 +1,46 @@
+
+name: akbiyev-baimurat-student-api
+
+services:
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: studentsdb
+      POSTGRES_USER: studentuser
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - student_network
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U studentuser -d studentsdb
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  app:
+    build: .
+    image: akbiyev-baimurat-student-api:v1.0-38150
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/studentsdb
+      SPRING_DATASOURCE_USERNAME: studentuser
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - student_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  student_network:
+    driver: bridge

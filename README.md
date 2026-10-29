@@ -14,7 +14,7 @@ Technologies:
 - Docker
 - Jenkins
 
-Project status: CRUD
+Project status: documentation updated
 
 ## Feature Development
 

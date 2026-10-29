@@ -15,3 +15,14 @@ Technologies:
 - Jenkins
 
 Project status: initial
+
+## Feature Development
+
+Developer: Baimurat Akbiyev
+
+Added an endpoint for counting students.
+
+GET /api/students/count
+
+This endpoint returns the total number of
+student records stored in PostgreSQL.

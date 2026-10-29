@@ -14,7 +14,7 @@ Technologies:
 - Docker
 - Jenkins
 
-Project status: initial
+Project status: documentation updated
 
 ## Feature Development
 

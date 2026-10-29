@@ -73,4 +73,11 @@ public class StudentController {
         Student student = getById(id);
         repository.delete(student);
     }
+
+
+    @GetMapping("/students/count")
+    public Map<String, Long> getStudentCount() {
+        return Map.of("totalStudents", repository.count());
+    }
+
 }

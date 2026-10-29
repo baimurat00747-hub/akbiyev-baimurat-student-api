@@ -59,4 +59,22 @@ class StudentControllerTest {
                 exception.getStatusCode()
         );
     }
+
+
+    @Test
+    void shouldCountStudents() {
+        StudentRepository repository =
+                mock(StudentRepository.class);
+
+        when(repository.count()).thenReturn(3L);
+
+        StudentController controller =
+                new StudentController(repository);
+
+        assertEquals(
+                3L,
+                controller.getStudentCount().get("totalStudents")
+        );
+    }
+
 }
